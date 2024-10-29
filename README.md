@@ -1,7 +1,6 @@
 
 
 ##### 运行程序 </br>
-模型：SAGPooling_Global </br>
 数据集：DD
 ```python
 python main.py --exp_name=DD --dataset=DD
