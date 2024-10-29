@@ -1,6 +1,6 @@
 【ICML-2019 Graph U-Nets】[Graph U-Nets](https://proceedings.mlr.press/v97/gao19a/gao19a.pdf)
 
-<img width="500" height="800" alt="c75498627e7f66bace252575baab90a" src="https://github.com/user-attachments/assets/d50b814e-ff1b-4672-802b-f7cff049bf81">
+<img width="800" height="700" alt="c75498627e7f66bace252575baab90a" src="https://github.com/user-attachments/assets/d50b814e-ff1b-4672-802b-f7cff049bf81">
 
 ##### 运行程序 </br>
 数据集：DD
