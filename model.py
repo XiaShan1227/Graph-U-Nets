@@ -73,7 +73,7 @@ class GraphUNets(nn.Module):
 
         self.ac = nn.ELU(alpha=1.0)
 
-        self.l1 = nn.Linear(32, 64, bias=False)
+        self.l1 = nn.Linear(64, 64, bias=False)
         self.classifier = nn.Linear(64, num_classes)
 
     def forward(self, data):
@@ -132,10 +132,10 @@ class GraphUNets(nn.Module):
 
 
         ## Readout
-        x = torch.cat([gmp(x13, batch), gap(x13, batch)], dim=1) # [bs*num_n1, num_f=16] ——> [bs, num_f=16*2=32]
+        x = torch.cat([gmp(x13, batch), gap(x13, batch)], dim=1) # [bs*num_n1, num_f=32] ——> [bs, num_f=32*2=64]
         x = self.ac(x)
 
-        x = self.l1(x) # [bs, num_f=32] ——> [bs, num_f=64]
+        x = self.l1(x) # [bs, num_f=64] ——> [bs, num_f=64]
         x = self.ac(x)
 
         x = self.classifier(x)  # (bs, num_f=64) ——> (bs, datasets_number_categories)

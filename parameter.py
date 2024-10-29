@@ -16,7 +16,7 @@ def parse_args():
     parser.add_argument('--seed', type=int, default=1227, help='Random seed of the experiment')  # 随机种子
     parser.add_argument('--exp_name', type=str, default='Exp', help='Name of the experiment')
     parser.add_argument('--dataset', type=str, help='Dataset to use: [DD, PROTEINS, NCI1, etc]', required=True)
-    parser.add_argument('--batch_size', type=int, default=64, help='Size of the training and validation batch')  # 训练、验证集batch_size
+    parser.add_argument('--batch_size', type=int, default=32, help='Size of the training and validation batch')  # 训练、验证集batch_size
     parser.add_argument('--test_batch_size', type=int, default=1, help='Size of the testing batch')
     parser.add_argument('--gpu_index', type=int, default=0, help='Index of GPU(set <0 to use CPU)')
 
