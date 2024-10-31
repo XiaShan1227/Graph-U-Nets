@@ -41,6 +41,47 @@ class GPool(nn.Module):
         return xl1, edge_index_pool, top_idxs.squeeze()
 
 
+""" 对于batch-graph可以使用此代码  
+class GPool(nn.Module):
+    def __init__(self, num_f, pool_ratio):
+        super(GPool, self).__init__()
+
+        self.p = nn.Linear(num_f, 1, bias=False)
+        self.ratio = pool_ratio # 池化率
+
+    def forward(self, xl, edge_index, batch):
+        y = self.p(xl) / torch.norm(self.p.weight) # 投影向量
+        unique_graphs = batch.unique()  # 获取所有图的唯一标识符
+
+        top_idxs = []
+        for graph_id in unique_graphs:
+            # 获取属于该图的节点索引
+            node_idxs = (batch == graph_id).nonzero(as_tuple=True)[0]
+            # 对该图的投影向量计算 topk
+            y_graph = y[node_idxs]
+            k = max(1, math.ceil(self.ratio * len(y_graph)))  # 至少保留一个节点
+            _, topk_idxs = torch.topk(y_graph, k, dim=0)
+            # 映射回全局索引
+            top_idxs.append(node_idxs[topk_idxs.squeeze()])
+
+        top_idxs = torch.cat(top_idxs, dim=0)  # 所有图的保留节点索引
+        y_hat = torch.sigmoid(y[top_idxs])
+        xl1 = xl[top_idxs] * y_hat
+
+        al = to_dense_adj(edge_index, max_num_nodes=len(y)).squeeze() # l层邻接矩阵(稠密形)
+
+        al1 = torch.index_select(al, 0, top_idxs.squeeze())
+        al1 = torch.index_select(al1, 1, top_idxs.squeeze()) # l+1层邻接矩阵(稠密形)
+
+        al1_sparse = dense_to_sparse(al1) # l+1层邻接矩阵(稀疏形)
+        edge_index_pool = torch.sparse_coo_tensor(al1_sparse[0], al1_sparse[1]).coalesce().indices()  # 可以去除重复边
+
+        batch_pool = batch[top_idxs] # 更新池化后的batch信息
+
+        return xl1, edge_index_pool, top_idxs.squeeze(), batch_pool
+"""
+
+
 class GUnpool(nn.Module):
     def __init__(self):
         super(GUnpool, self).__init__()
