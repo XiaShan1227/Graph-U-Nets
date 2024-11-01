@@ -11,7 +11,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 from data import load_dataset
-from model import GraphUNets
+# from model import GraphUNets
+from model_new import GraphUNets
 from parameter import parse_args, IOStream, table_printer
 
 
